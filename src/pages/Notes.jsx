@@ -3,11 +3,10 @@ import Mynotes from '../components/Mynotes';
 import Recycle from '../components/Recycle';
 import Add from '../components/Add';
 
-function Notes() {
+function Notes(UserEmail) {
   const [visiblecomponent, setvisiblecomponent] = useState('Mynotes');
   const [selectedNote, setSelectedNote] = useState(null);
 
-  // Initialize states from localStorage
   const [notes, setNotes] = useState(() => {
     const saved = localStorage.getItem('mynotes');
     return saved ? JSON.parse(saved) : [];
@@ -23,19 +22,17 @@ function Notes() {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Sync all states to localStorage
   useEffect(() => {
     localStorage.setItem('mynotes', JSON.stringify(notes));
     localStorage.setItem('recycleBin', JSON.stringify(recycleBinNotes));
     localStorage.setItem('pinnedNotes', JSON.stringify(pinnedNotes));
   }, [notes, recycleBinNotes, pinnedNotes]);
 
-  // Add new note
+
   const handleAddNote = (newNote) => {
     setNotes(prev => [...prev, newNote]);
   };
 
-  // Update existing note
   const handleUpdateNote = (updatedNote) => {
     setNotes(prev => 
       prev.map((n, i) => i === selectedNote.index ? updatedNote : n)
@@ -44,7 +41,6 @@ function Notes() {
     setvisiblecomponent('Mynotes');
   };
 
-  // Delete note (both pinned and unpinned)
   const handleDeleteNote = (indexToDelete, isPinned = false) => {
     let deletedNote;
     if (isPinned) {
@@ -57,26 +53,22 @@ function Notes() {
     setRecycleBinNotes(prev => [...prev, deletedNote]);
   };
 
-  // Restore from recycle bin
   const handleRestoreNote = (indexToRestore) => {
     const restoredNote = recycleBinNotes[indexToRestore];
     setRecycleBinNotes(prev => prev.filter((_, i) => i !== indexToRestore));
     setNotes(prev => [...prev, restoredNote]);
   };
 
-  // Permanently delete from recycle bin
   const handleDeletePermanently = (indexToDelete) => {
     setRecycleBinNotes(prev => prev.filter((_, i) => i !== indexToDelete));
   };
 
-  // Pin note
   const handlePinNote = (index) => {
     const noteToPin = notes[index];
     setPinnedNotes(prev => [...prev, noteToPin]);
     setNotes(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Unpin note
   const handleUnpinNote = (index) => {
     const noteToUnpin = pinnedNotes[index];
     setNotes(prev => [...prev, noteToUnpin]);
@@ -86,7 +78,6 @@ function Notes() {
   return (
     <div className='mx-10 mt-5 p-10'>
       <div className='flex gap-10'>
-        {/* Sidebar - unchanged */}
         <div className='border-r-2 border-black mt-10 ps-0 p-10 sticky top-0'>
           <div className='flex flex-col gap-10'>
             <button onClick={() => setvisiblecomponent('Add')} className='cursor-pointer'>
@@ -101,7 +92,6 @@ function Notes() {
                 <p>Capture your thoughts instantly start a new note.</p>
               </div>
             </button>
-
             <button onClick={() => setvisiblecomponent('Recycle')} className='cursor-pointer'>
               <div className='w-70 border-2 border-black p-5 rounded-2xl hover:bg-black hover:border-white hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all duration-300'>
                 <h1 className='text-2xl font-semibold'>
@@ -116,7 +106,6 @@ function Notes() {
                 <p>Your deleted notes live here until you're ready to recover or remove them forever</p>
               </div>
             </button>
-
             <button onClick={() => setvisiblecomponent('Mynotes')} className='cursor-pointer'>
               <div className='w-70 border-2 border-black p-5 rounded-2xl hover:bg-black hover:border-white hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all duration-300'>
                 <h1 className='text-2xl font-semibold'>
@@ -132,14 +121,13 @@ function Notes() {
             </button>
           </div>
         </div>
-
-        {/* Main Content */}
         <div>
           {visiblecomponent === 'Add' && (
             <Add
               Addnote={handleAddNote}
               noteToEdit={selectedNote}
               updateNote={handleUpdateNote}
+              UserEmail={UserEmail} 
             />
           )}
 

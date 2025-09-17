@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { useState } from 'react'
 
-function Add({Addnote,noteToEdit = null, updateNote }) {
+function Add({Addnote,noteToEdit = null, updateNote,UserEmail }) {
   const [title, setTitle] = useState(noteToEdit?.title || '');
   const [note, setNote] = useState(noteToEdit?.note || '');
   const handleSubmit = (e) => 
@@ -12,7 +13,12 @@ function Add({Addnote,noteToEdit = null, updateNote }) {
       }  
     else if (Addnote) 
       {
-        Addnote({ title, note });
+        axios.post('http://localhost:5600/api/v1/notes/addnote',{mail_id : UserEmail.UserEmail,title : title, content : note})
+        .then(()=>
+          {
+            Addnote({ title, note });
+        })
+        .catch(err=> console.log(err))
       }
     setTitle('');
     setNote('');

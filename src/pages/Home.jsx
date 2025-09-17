@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 
-export const Home = () => {
-  const storedUser = JSON.parse(localStorage.getItem('currentUser'));
+export const Home = ({User}) => {
+
   return (<>
   <div>
     <div className="flex flex-col justify-center items-center my-5">
@@ -12,8 +12,8 @@ export const Home = () => {
         <h1 className="text-5xl font-bold mb-2">Welcome to Notify</h1>
         <p className=" w-100 text-md text-justify p-2 mt-2 text-gray-600">Take notes. Stay organized. Be productive.Your simple and smart note-taking companion. Capture ideas, organize tasks, and never miss a thought.</p>
         <div className='flex justify-center mt-2'>
-          {storedUser ? (<button  className=' border-2 cursor-pointer border-black p-3 hover:bg-black hover:text-white rounded-3xl hover:shadow-md hover:scale-105 transition-all duration-300 hover:shadow-black'><Link to="/notes">Get Started</Link></button>) : 
-          (<button  className=' border-2 cursor-pointer border-black p-3 hover:bg-black hover:text-white rounded-3xl hover:shadow-md hover:scale-105 transition-all duration-300 hover:shadow-black'><Link to="/signin">Get Started</Link></button>)}
+          {User ? (<Link to="/notes"><button  className=' border-2 cursor-pointer border-black p-3 hover:bg-black hover:text-white rounded-3xl hover:shadow-md hover:scale-105 transition-all duration-300 hover:shadow-black'>Get Started</button></Link>) : 
+          (<Link to="/signin"><button  className=' border-2 cursor-pointer border-black p-3 hover:bg-black hover:text-white rounded-3xl hover:shadow-md hover:scale-105 transition-all duration-300 hover:shadow-black'>Get Started</button></Link>)}
         </div>
       </div>
     </div>
@@ -51,8 +51,8 @@ export const Home = () => {
     <div className="my-16 text-center">
       <h2 className="text-2xl font-semibold mb-2">Ready to take smarter notes?</h2>
       <p className="my-5">Start organizing your ideas in seconds with Notify.</p>
-      {storedUser ? (<button className="border-2 border-black p-3 rounded-3xl hover:bg-black hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all cursor-pointer duration-300"><Link to="/notes">Go to My Notes</Link></button>) : 
-      (<button className="border-2 border-black p-3 rounded-3xl hover:bg-black hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all cursor-pointer duration-300"><Link to="/signin">Go to My Notes</Link></button>) }
+      {User ? (<Link to="/notes"><button className="border-2 border-black p-3 rounded-3xl hover:bg-black hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all cursor-pointer duration-300">Go to My Notes</button></Link>) : 
+      (<Link to="/signin"><button className="border-2 border-black p-3 rounded-3xl hover:bg-black hover:text-white hover:shadow-md hover:shadow-black hover:scale-110 transition-all cursor-pointer duration-300">Go to My Notes</button></Link>) }
     </div>
   </div>
 

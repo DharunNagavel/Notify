@@ -6,17 +6,22 @@ import Signup from './pages/Signup';
 import Docs from './pages/Docs';
 import Notes from './pages/Notes';
 import Footer from './components/Footer';
+import { useState } from "react";
+
 function App() {
+    const [User,setUser]=useState(false);
+    const [UserName,setUserName]=useState('');
+    const [UserEmail,setUserEmail]=useState('');
   return (
     <>
     <BrowserRouter>
-    <Navbar />
+    <Navbar User={User} setUser={setUser} UserName={UserName} />
     <Routes>
-      <Route path="/" Component={Home}/>
-      <Route path="/notes" Component={Notes}/>
+      <Route path="/" element={<Home User={User} />}/>
+      <Route path="/notes" element={<Notes UserEmail={UserEmail} />}/>
       <Route path="/docs" Component={Docs}/>
-      <Route path="/signin" Component={Signin}/>
-      <Route path="/signup" Component={Signup}/>           
+      <Route path="/signin" element={<Signin setUser={setUser} setUserName={setUserName} setUserEmail={setUserEmail} />} />
+      <Route path="/signup" element={<Signup setUser={setUser} setUserEmail={setUserEmail} setUserName={setUserName} />}/>           
     </Routes>
     <Footer/>
     </BrowserRouter>

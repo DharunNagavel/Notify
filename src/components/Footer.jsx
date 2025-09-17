@@ -5,7 +5,7 @@ function Footer() {
   const [user, setUser] =useState(false);
   return (<>
   <hr />
-    <footer className='flex justify-around items-center p-5 mb-5'>
+    <footer className='flex flex-wrap justify-around items-center p-5 mb-5'>
         <div>
             <p>© 2025 Designed & Developed by Dharun Nagavel.</p>
         </div>

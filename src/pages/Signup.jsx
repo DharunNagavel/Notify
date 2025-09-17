@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link,useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
-export default function Signup() {
+export default function Signup({setUser,setUserEmail,setUserName}) {
   const [mail, setmail] = useState('');
   const [pass, setpass] = useState('');
   const [name, setname] = useState('');
@@ -9,28 +10,15 @@ export default function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-
-    if (!name || !mail || !pass) {
-      alert("Please fill all fields.");
-      return;
-    }
-
-    const user = { name, mail, pass };
-
-    const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
-
-    // Check if the email is already registered
-    const alreadyExists = existingUsers.some(u => u.mail === mail);
-    if (alreadyExists) {
-      alert("Account already exists with this email.");
-      return;
-    }
-
-    const updatedUsers = [...existingUsers, user];
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-    alert("Signup successful!");
-    navigate('/signin');
+    axios.post('http://localhost:5600/api/v1/auth/signup',{name,mail,pass})
+    .then(res=>{
+      alert('Login Successful')
+      setUser(true)
+      setUserName(res.data.user.name);
+      setUserEmail(mail);
+      navigate('/')
+    })
+    .catch(err =>{console.log(err)})
   };
 
   return (
@@ -40,10 +28,10 @@ export default function Signup() {
           <img src="notify.png" className='w-12 mt-2 bg-white rounded-full me-3' alt="" />
           <h1 className='text-5xl text-center'>Sign Up</h1>
         </div>
-        <form onSubmit={handleSignup} className='flex flex-col gap-8 m-8'>
-          <input type="text" value={name} onChange={(e) => setname(e.target.value)} placeholder='Enter the Username' className='text-xl rounded-xl p-2 border-2' />
-          <input type="email" value={mail} onChange={(e) => setmail(e.target.value)} placeholder='Enter the Email' className='text-xl rounded-xl p-2 border-2' />
-          <input type="password" value={pass} onChange={(e) => setpass(e.target.value)} placeholder='Enter the Password' className='text-xl rounded-xl p-2 border-2' />
+        <form onSubmit={handleSignup} method='post' className='flex flex-col gap-8 m-8'>
+          <input type="text" value={name} onChange={(e) => setname(e.target.value)} placeholder='Enter the Username' className='text-xl rounded-xl p-2 border-2' required />
+          <input type="email" value={mail} onChange={(e) => setmail(e.target.value)} placeholder='Enter the Email' className='text-xl rounded-xl p-2 border-2' required />
+          <input type="password" value={pass} onChange={(e) => setpass(e.target.value)} placeholder='Enter the Password' className='text-xl rounded-xl p-2 border-2' required />
           <button className='border-2 p-2 text-2xl border-white rounded-2xl hover:bg-white hover:text-black'>Sign Up</button>
         </form>
         <div className='m-8 text-center'>

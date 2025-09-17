@@ -8,7 +8,7 @@ function Recycle({ notes, onRestore, onDeletePermanently }) {
       <h2 className="text-3xl font-semibold mb-4 border-b-2 p-3 rounded-xl inline">Recycle Bin</h2>
 
       {!hasNotes ? (
-        <div className='flex items-center justify-center ms-40 mt-70 w-full'>
+        <div className='flex items-center justify-center ms-15 mt-70 w-full'>
           <h1 className='text-3xl'>Empty Recycle Bin</h1>
         </div>
       ) : (
