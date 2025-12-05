@@ -44,7 +44,7 @@ export const Navbar = ({User,setUser,UserName}) => {
                 {User ?(<>
                 <div>
                   <button onClick={handleSignOut}  className={`p-3 cursor-pointer rounded-3xl transition-all duration-200 ${scrolled ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-log-out-icon lucide-log-out inline me-3"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>Log Out </button>
-                </div>
+                </div>  
                 <div>
                   <button className={`p-3 cursor-pointer rounded-3xl transition-all duration-200 ${scrolled ? 'hover:bg-white hover:text-black' : 'hover:bg-black hover:text-white'}`}><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-icon lucide-user inline me-3"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>{UserName}</button>
                 </div></>):(
